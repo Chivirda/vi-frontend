@@ -1,29 +1,58 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "@/views/Home.vue";
+import TaskList from "@/views/TaskList";
+import Task from "@/views/Task.vue";
+import Analytics from "@/views/Analytics.vue";
+import notFound from "@/views/notFound";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: "*",
+    component: notFound,
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
+    path: "/",
+    name: "Home",
+    component: Home,
+    meta: {
+      breadcrumb: [{ name: "Главная" }],
+    },
+  },
+  {
+    path: "/tasks",
+    name: "TasksList",
+    component: TaskList,
+    meta: {
+      breadcrumb: [{ name: "Главная", link: "/" }, { name: "Список заявок" }],
+    },
+  },
+  {
+    path: "/task/:id",
+    component: Task,
+    meta: {
+      breadcrumb: [
+        { name: "Главная", link: "/" },
+        { name: "Список заявок", link: "/tasks" },
+        { name: "Заявка" },
+      ],
+    },
+  },
+  {
+    path: "/analytics",
+    component: Analytics,
+    meta: {
+      breadcrumb: [{ name: "Главная", link: "/" }, { name: "Аналитика" }],
+    },
+  },
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
