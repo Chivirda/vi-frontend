@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <md-card class="card" v-if="isSignIn">
+    <md-card class="card" :class="messageClass" v-if="isSignIn">
+      <span class="md-error form-error">{{ this.formError.message }}</span>
       <md-card-content>
         <md-field>
           <label>Email</label>
@@ -18,7 +19,8 @@
       </md-card-actions>
     </md-card>
 
-    <md-card class="card" v-else>
+    <md-card class="card" :class="messageClass" v-else>
+      <span class="md-error form-error">{{ this.formError.message }}</span>
       <md-card-content>
         <md-field>
           <label>Email</label>
@@ -49,8 +51,6 @@
 <script>
 import axios from 'axios';
 
-const server = 'http://localhost:1780/api';
-
 export default {
   name: 'Home',
   data() {
@@ -64,12 +64,20 @@ export default {
         repeatedPlainPassword: '',
         fullName: '',
       },
+      formError: {
+        hasError: false,
+        message: '',
+      },
     };
   },
   methods: {
     async signUpMethod() {
       try {
-        const response = await axios.post(`${server}/registration`, this.signUp);
+        const response = await axios.post('http://localhost:1780/api/registration', this.signUp);
+        if (response.data.error) {
+          this.formError.hasError = response.data.error;
+          this.formError.message = response.data.message;
+        }
         console.log(response);
       } catch (error) {
         console.error(error);
@@ -77,13 +85,26 @@ export default {
     },
     async loginMethod() {
       try {
-        await this.$store.dispatch('getToken', {
+        const response = await axios.post('http://localhost:1780/api/login', {
           email: this.email,
           password: this.password,
         });
+        this.$store.commit('setToken', response.data.data);
+        if (response.data.error) {
+          this.formError.hasError = response.data.error;
+          this.formError.message = response.data.message;
+        }
+        console.log(response);
       } catch (error) {
         console.error(error);
       }
+    },
+  },
+  computed: {
+    messageClass() {
+      return {
+        'md-invalid': this.formError.hasError,
+      };
     },
   },
 };
@@ -92,5 +113,10 @@ export default {
 .card {
   max-width: 400px;
   margin: 100px auto;
+}
+
+.form-error {
+  background-color: transparent;
+  color: red;
 }
 </style>
