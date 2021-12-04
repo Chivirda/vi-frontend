@@ -26,15 +26,15 @@
         </md-field>
         <md-field>
           <label>Пароль</label>
-          <md-input v-model="sighnUp.password"></md-input>
+          <md-input v-model="sighnUp.plainPassword"></md-input>
         </md-field>
         <md-field>
           <label>Повторите пароль</label>
-          <md-input v-model="sighnUp.passwordRepeat"></md-input>
+          <md-input v-model="sighnUp.repeatedPlainPassword"></md-input>
         </md-field>
         <md-field>
           <label>Имя</label>
-          <md-input v-model="sighnUp.name"></md-input>
+          <md-input v-model="sighnUp.fullName"></md-input>
         </md-field>
       </md-card-content>
 
@@ -60,9 +60,9 @@ export default {
       isSighnIn: true,
       sighnUp: {
         email: "",
-        password: "",
-        passwordRepeat: "",
-        name: "",
+        plainPassword: "",
+        repeatedPlainPassword: "",
+        fullName: "",
       },
     };
   },
