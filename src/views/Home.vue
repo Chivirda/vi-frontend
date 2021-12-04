@@ -49,8 +49,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   name: 'Home',
   data() {
@@ -73,7 +71,7 @@ export default {
   methods: {
     async signUpMethod() {
       try {
-        const response = await axios.post('http://localhost:1780/api/registration', this.signUp);
+        const response = await this.$api.post('registration', this.signUp);
         if (response.data.error) {
           this.formError.hasError = response.data.error;
           this.formError.message = response.data.message;
@@ -85,10 +83,11 @@ export default {
     },
     async loginMethod() {
       try {
-        const response = await axios.post('http://localhost:1780/api/login', {
+        const response = await this.$api.post('login', {
           email: this.email,
           password: this.password,
         });
+        this.$api.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.data;
         this.$store.commit('setToken', response.data.data);
         if (response.data.error) {
           this.formError.hasError = response.data.error;
