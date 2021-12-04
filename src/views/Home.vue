@@ -70,7 +70,7 @@ export default {
     async sighnUpMethod() {
       try {
         const response = await axios.post(
-          `${server}/registraton`,
+          `${server}/registration`,
           this.sighnUp
         );
         console.log(response);
