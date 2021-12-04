@@ -11,11 +11,11 @@
   </div>
 </template>
 <script>
-import TaskForm from "@/components/TaskForm";
+import TaskForm from '@/components/TaskForm';
 export default {
-  name: "Modal",
+  name: 'Modal',
   data: () => ({
-    showDialog: "",
+    showDialog: '',
   }),
   props: {
     task: {
@@ -28,10 +28,10 @@ export default {
   },
   methods: {
     changeTitle(e) {
-      this.$emit("change-title", e);
+      this.$emit('change-title', e);
     },
     changeDescription(e) {
-      this.$emit("change-description", e);
+      this.$emit('change-description', e);
     },
   },
 };

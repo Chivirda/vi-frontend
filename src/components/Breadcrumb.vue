@@ -2,14 +2,8 @@
   <ul class="breadcrumbs__list">
     <template v-for="(breadcrumb, index) in breadcrumbsList">
       <li class="breadcrumbs__item" :key="index" v-if="breadcrumb.link">
-        <router-link :to="breadcrumb.link" class="breadcrumbs__link">{{
-          breadcrumb.name
-        }}</router-link>
-        <span
-          class="breadcrumbs__item breadcrumbs__item--divider"
-          v-if="breadcrumb.link"
-          >/</span
-        >
+        <router-link :to="breadcrumb.link" class="breadcrumbs__link">{{ breadcrumb.name }}</router-link>
+        <span class="breadcrumbs__item breadcrumbs__item--divider" v-if="breadcrumb.link">/</span>
       </li>
       <template v-else>
         <li class="breadcrumbs__item" :key="index">
@@ -21,7 +15,7 @@
 </template>
 <script>
 export default {
-  name: "Breadcrumbs",
+  name: 'Breadcrumbs',
   data: () => ({
     breadcrumbsList: null,
   }),

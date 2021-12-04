@@ -2,20 +2,12 @@
   <div>
     <md-field>
       <label>Тема задачи</label>
-      <md-input
-        required
-        :value="title"
-        @input="$emit('change-title', $event)"
-      />
+      <md-input required :value="title" @input="$emit('change-title', $event)" />
       <span class="md-error">Ошибка</span>
     </md-field>
     <md-field>
       <label>Описание</label>
-      <md-textarea
-        required
-        :value="description"
-        @input="$emit('change-description', $event)"
-      />
+      <md-textarea required :value="description" @input="$emit('change-description', $event)" />
       <span class="md-helper-text">Текст подсказка</span>
       <span class="md-error">Ошибка</span>
     </md-field>
@@ -25,19 +17,19 @@
 
 <script>
 export default {
-  name: "TaskForm",
+  name: 'TaskForm',
   data: () => ({
     taskTheme: null,
-    defaultDescription: "",
+    defaultDescription: '',
   }),
   props: {
     title: {
       type: String,
-      default: "",
+      default: '',
     },
     description: {
       type: String,
-      default: "",
+      default: '',
     },
   },
 };

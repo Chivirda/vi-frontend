@@ -22,17 +22,13 @@
         <md-list-item>
           <md-icon>send</md-icon>
           <span @click="hide()">
-            <router-link to="/tasks" class="md-title"
-              >Список заявок</router-link
-            >
+            <router-link to="/tasks" class="md-title">Список заявок</router-link>
           </span>
         </md-list-item>
         <md-list-item>
           <md-icon>analytics</md-icon>
           <span @click="hide()">
-            <router-link to="/analytics" class="md-title"
-              >Аналитика</router-link
-            >
+            <router-link to="/analytics" class="md-title">Аналитика</router-link>
           </span>
         </md-list-item>
       </md-list>
@@ -42,9 +38,9 @@
 </template>
 
 <script>
-import Breadcrumbs from "@/components/Breadcrumb";
+import Breadcrumbs from '@/components/Breadcrumb';
 export default {
-  name: "Header",
+  name: 'Header',
   components: { Breadcrumbs },
   data: () => ({
     showNavigation: false,

@@ -1,56 +1,52 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Home from "@/views/Home.vue";
-import TaskList from "@/views/TaskList";
-import Task from "@/views/Task.vue";
-import Analytics from "@/views/Analytics.vue";
-import notFound from "@/views/notFound";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Home from '@/views/Home.vue';
+import TaskList from '@/views/TaskList';
+import Task from '@/views/Task.vue';
+import Analytics from '@/views/Analytics.vue';
+import notFound from '@/views/notFound';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "*",
+    path: '*',
     component: notFound,
   },
   {
-    path: "/",
-    name: "Home",
+    path: '/',
+    name: 'Home',
     component: Home,
     meta: {
-      breadcrumb: [{ name: "Главная" }],
+      breadcrumb: [{ name: 'Главная' }],
     },
   },
   {
-    path: "/tasks",
-    name: "TasksList",
+    path: '/tasks',
+    name: 'TasksList',
     component: TaskList,
     meta: {
-      breadcrumb: [{ name: "Главная", link: "/" }, { name: "Список заявок" }],
+      breadcrumb: [{ name: 'Главная', link: '/' }, { name: 'Список заявок' }],
     },
   },
   {
-    path: "/task/:id",
+    path: '/task/:id',
     component: Task,
     meta: {
-      breadcrumb: [
-        { name: "Главная", link: "/" },
-        { name: "Список заявок", link: "/tasks" },
-        { name: "Заявка" },
-      ],
+      breadcrumb: [{ name: 'Главная', link: '/' }, { name: 'Список заявок', link: '/tasks' }, { name: 'Заявка' }],
     },
   },
   {
-    path: "/analytics",
+    path: '/analytics',
     component: Analytics,
     meta: {
-      breadcrumb: [{ name: "Главная", link: "/" }, { name: "Аналитика" }],
+      breadcrumb: [{ name: 'Главная', link: '/' }, { name: 'Аналитика' }],
     },
   },
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes,
 });

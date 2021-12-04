@@ -4,34 +4,28 @@
       <h1 class="md-title" style="flex: 1; text-align: left">
         {{ getTask.name }}
       </h1>
-      <i :class="`task__text--${getTask.status}`">{{
-        status[getTask.status]
-      }}</i>
+      <i :class="`task__text--${getTask.status}`">{{ status[getTask.status] }}</i>
       <md-button class="task__btn">Редактировать</md-button>
     </md-toolbar>
     <md-content class="container task__container">
       <strong>{{ getTask.description }}</strong>
     </md-content>
-    <modal
-      :task="getTask"
-      @change-title="changeTitle"
-      @change-description="changeDescription"
-    />
+    <modal :task="getTask" @change-title="changeTitle" @change-description="changeDescription" />
   </section>
 </template>
 <script>
-import task from "../static/tasks.json";
-import Modal from "@/components/Modal";
+import task from '../static/tasks.json';
+import Modal from '@/components/Modal';
 export default {
-  name: "Task",
+  name: 'Task',
   components: { Modal },
   data() {
     return {
       task,
       status: {
-        done: "Выполнено",
-        active: "В работе",
-        overdue: "Просрочено",
+        done: 'Выполнено',
+        active: 'В работе',
+        overdue: 'Просрочено',
       },
     };
   },

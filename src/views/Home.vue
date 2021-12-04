@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <md-card class="card" v-if="isSighnIn">
+    <md-card class="card" v-if="isSignIn">
       <md-card-content>
         <md-field>
           <label>Email</label>
@@ -14,7 +14,7 @@
 
       <md-card-actions>
         <md-button @click="loginMethod">Войти</md-button>
-        <md-button @click="isSighnIn = false">Зарегистрироваться</md-button>
+        <md-button @click="isSignIn = false">Зарегистрироваться</md-button>
       </md-card-actions>
     </md-card>
 
@@ -22,57 +22,54 @@
       <md-card-content>
         <md-field>
           <label>Email</label>
-          <md-input v-model="sighnUp.email"></md-input>
+          <md-input v-model="signUp.email"></md-input>
         </md-field>
         <md-field>
           <label>Пароль</label>
-          <md-input v-model="sighnUp.plainPassword"></md-input>
+          <md-input v-model="signUp.plainPassword"></md-input>
         </md-field>
         <md-field>
           <label>Повторите пароль</label>
-          <md-input v-model="sighnUp.repeatedPlainPassword"></md-input>
+          <md-input v-model="signUp.repeatedPlainPassword"></md-input>
         </md-field>
         <md-field>
           <label>Имя</label>
-          <md-input v-model="sighnUp.fullName"></md-input>
+          <md-input v-model="signUp.fullName"></md-input>
         </md-field>
       </md-card-content>
 
       <md-card-actions>
-        <md-button @click="isSighnIn = true">Войти</md-button>
-        <md-button @click="sighnUpMethod">Отправить</md-button>
+        <md-button @click="isSignIn = true">Войти</md-button>
+        <md-button @click="signUpMethod">Отправить</md-button>
       </md-card-actions>
     </md-card>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
-const server = "http://localhost:1780/api";
+const server = 'http://localhost:1780/api';
 
 export default {
-  name: "Home",
+  name: 'Home',
   data() {
     return {
-      email: "",
-      password: "",
-      isSighnIn: true,
-      sighnUp: {
-        email: "",
-        plainPassword: "",
-        repeatedPlainPassword: "",
-        fullName: "",
+      email: '',
+      password: '',
+      isSignIn: true,
+      signUp: {
+        email: '',
+        plainPassword: '',
+        repeatedPlainPassword: '',
+        fullName: '',
       },
     };
   },
   methods: {
-    async sighnUpMethod() {
+    async signUpMethod() {
       try {
-        const response = await axios.post(
-          `${server}/registration`,
-          this.sighnUp
-        );
+        const response = await axios.post(`${server}/registration`, this.signUp);
         console.log(response);
       } catch (error) {
         console.error(error);
@@ -80,11 +77,10 @@ export default {
     },
     async loginMethod() {
       try {
-        const response = await axios.post(`${server}/login`, {
+        await this.$store.dispatch('getToken', {
           email: this.email,
           password: this.password,
         });
-        console.log(response);
       } catch (error) {
         console.error(error);
       }

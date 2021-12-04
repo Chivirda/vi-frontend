@@ -1,15 +1,8 @@
 <template>
   <div>
     <md-list class="task__list">
-      <router-link
-        v-for="task in tasks"
-        :to="`/task/${task.id}`"
-        :key="task.id"
-      >
-        <md-list-item
-          class="task__item md-error"
-          :class="`task__item--${task.status}`"
-        >
+      <router-link v-for="task in tasks" :to="`/task/${task.id}`" :key="task.id">
+        <md-list-item class="task__item md-error" :class="`task__item--${task.status}`">
           <span class="task__number">{{ task.id }}</span>
           <div class="task__group">
             <span class="task__name">{{ task.name }}</span>
@@ -22,10 +15,10 @@
 </template>
 
 <script>
-import tasks from "../static/tasks.json";
+import tasks from '../static/tasks.json';
 
 export default {
-  name: "TripleLine",
+  name: 'TripleLine',
   data() {
     return {
       tasks,
@@ -78,7 +71,7 @@ export default {
   }
 
   &__number::before {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     background-color: rgba(255, 255, 255, 0.6);
