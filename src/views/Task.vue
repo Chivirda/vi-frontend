@@ -25,7 +25,7 @@ export default {
       status: {
         done: 'Выполнено',
         active: 'В работе',
-        overdue: 'Просрочено',
+        waiting: 'Просрочено',
       },
     };
   },

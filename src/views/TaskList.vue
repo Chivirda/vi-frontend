@@ -1,28 +1,98 @@
 <template>
   <div>
     <md-list class="task__list">
+      <md-button @click="isCreateModalShow = true" class="md-raised md-accent">Создать заявку</md-button>
       <router-link v-for="task in tasks" :to="`/task/${task.id}`" :key="task.id">
-        <md-list-item class="task__item md-error" :class="`task__item--${task.status}`">
+        <md-list-item class="task__item md-error" :class="`task__item--${task.className}`">
           <span class="task__number">{{ task.id }}</span>
           <div class="task__group">
-            <span class="task__name">{{ task.name }}</span>
-            <p class="task__text">{{ task.description }}</p>
+            <span class="task__name">{{ task.title }}</span>
           </div>
         </md-list-item>
       </router-link>
     </md-list>
+    <md-dialog :md-active.sync="isCreateModalShow" :class="messageClass">
+      <md-card class="create-task">
+        <span class="md-error form-error">{{ this.formError.message }}</span>
+        <md-card-content>
+          <md-field>
+            <label>Заголовок запроса</label>
+            <md-input v-model="title"></md-input>
+          </md-field>
+          <md-field>
+            <label>Текст запроса</label>
+            <md-textarea v-model="message" md-autogrow></md-textarea>
+          </md-field>
+        </md-card-content>
+        <md-card-actions class="md-gutter md-alignment-space-between">
+          <md-button @click="closeModalForm" class="md-raised md-primary">Отменить</md-button>
+          <md-button @click="createTask" class="md-raised md-accent">Отправить запрос</md-button>
+        </md-card-actions>
+      </md-card>
+    </md-dialog>
   </div>
 </template>
 
 <script>
-import tasks from '../static/tasks.json';
+const classMap = ['await', 'active', 'done'];
 
 export default {
   name: 'TripleLine',
   data() {
     return {
-      tasks,
+      tasks: [],
+      formError: {
+        hasError: false,
+        message: '',
+      },
+      isCreateModalShow: false,
+      title: '',
+      message: '',
     };
+  },
+  mounted() {
+    this.getTasks();
+  },
+  methods: {
+    async createTask() {
+      try {
+        const response = await this.$api.post('request/add', {
+          title: this.title,
+          message: this.message,
+        });
+        this.resetForm();
+        if (response.data.error) {
+          this.formError.hasError = response.data.error;
+          this.formError.message = response.data.message;
+          console.log(response.data.message);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getTasks() {
+      try {
+        const response = await this.$api.post('request/list');
+        this.tasks = response.data.data.map((task) => ({ ...task, className: classMap[task.status.id] }));
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    resetForm() {
+      this.title = '';
+      this.message = '';
+    },
+    closeModalForm() {
+      this.isCreateModalShow = false;
+      this.resetForm();
+    },
+  },
+  computed: {
+    messageClass() {
+      return {
+        'md-invalid': this.formError.hasError,
+      };
+    },
   },
 };
 </script>
@@ -46,7 +116,7 @@ export default {
     display: flex;
     align-items: center;
 
-    &--overdue {
+    &--await {
       background-color: #db545a;
     }
 
@@ -111,5 +181,16 @@ export default {
 
 .md-list-item-container {
   height: 100%;
+}
+
+.create-task {
+  padding: 30px;
+  min-width: 500px;
+  max-width: 100%;
+}
+
+.form-error {
+  background-color: transparent;
+  color: red;
 }
 </style>
