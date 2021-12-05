@@ -35,7 +35,7 @@
 </template>
 
 <script>
-const classMap = ['rejected', 'done', 'await'];
+const classMap = ['await', 'done', 'rejected'];
 
 export default {
   name: 'TasksList',
