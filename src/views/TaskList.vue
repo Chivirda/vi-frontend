@@ -8,6 +8,7 @@
           <div class="task__group">
             <span class="task__name">{{ task.title }}</span>
           </div>
+          <md-button @click.stop.prevent="deleteTask(task.id)">Удалить</md-button>
         </md-list-item>
       </router-link>
     </md-list>
@@ -60,11 +61,11 @@ export default {
           title: this.title,
           message: this.message,
         });
-        this.resetForm();
-        if (response.data.error) {
+        if (!response.data.error) {
+          this.closeModalForm();
+        } else {
           this.formError.hasError = response.data.error;
           this.formError.message = response.data.message;
-          console.log(response.data.message);
         }
       } catch (error) {
         console.error(error);
@@ -74,6 +75,13 @@ export default {
       try {
         const response = await this.$api.post('request/list');
         this.tasks = response.data.data.map((task) => ({ ...task, className: classMap[task.status.id] }));
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async deleteTask(id) {
+      try {
+        await this.$api.post(`request/delete/${id}`);
       } catch (error) {
         console.error(error);
       }
