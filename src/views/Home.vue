@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import cookies from 'js-cookie';
+
 export default {
   name: 'Home',
   data() {
@@ -87,13 +89,12 @@ export default {
           email: this.email,
           password: this.password,
         });
-        this.$api.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.data;
-        this.$store.commit('setToken', response.data.data);
+        cookies.set('token', response.data.data);
+        await this.$router.push('/tasks');
         if (response.data.error) {
           this.formError.hasError = response.data.error;
           this.formError.message = response.data.message;
         }
-        console.log(response);
       } catch (error) {
         console.error(error);
       }
