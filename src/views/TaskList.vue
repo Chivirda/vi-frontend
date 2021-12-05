@@ -35,10 +35,10 @@
 </template>
 
 <script>
-const classMap = ['await', 'active', 'done'];
+const classMap = ['rejected', 'done', 'await'];
 
 export default {
-  name: 'TripleLine',
+  name: 'TasksList',
   data() {
     return {
       tasks: [],
@@ -124,7 +124,7 @@ export default {
     display: flex;
     align-items: center;
 
-    &--await {
+    &--rejected {
       background-color: #db545a;
     }
 
@@ -132,7 +132,7 @@ export default {
       background-color: #37ce7e;
     }
 
-    &--active {
+    &--await {
       background-color: #4c7397;
     }
   }
