@@ -63,6 +63,7 @@ export default {
         });
         if (!response.data.error) {
           this.closeModalForm();
+          await this.getTasks();
         } else {
           this.formError.hasError = response.data.error;
           this.formError.message = response.data.message;
@@ -82,6 +83,7 @@ export default {
     async deleteTask(id) {
       try {
         await this.$api.post(`request/delete/${id}`);
+        await this.getTasks();
       } catch (error) {
         console.error(error);
       }
