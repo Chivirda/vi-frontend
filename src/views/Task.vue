@@ -46,7 +46,7 @@ export default {
     return {
       title: '',
       message: '',
-      task: {},
+      task: null,
       classMap: ['await', 'done', 'rejected'],
       formError: {
         hasError: false,
