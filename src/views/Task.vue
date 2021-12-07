@@ -74,8 +74,11 @@ export default {
 
       try {
         this.isEditModalShow = false;
-        // const response = await this.$api.post(`/request/edit/${this.task.id}`, this.task);
-        // console.log(response);
+        const response = await this.$api.post(`/request/edit/${this.task.id}`, {
+          title: this.task.title,
+          message: this.task.message,
+        });
+        console.log(response);
       } catch (error) {
         console.error(error);
       }
